@@ -1,0 +1,47 @@
+﻿
+using Dealership.Models.Contracts;
+
+namespace Dealership.Models
+{
+    public class Motorcycle : Vehicle, IMotorcycle
+    {
+        public const int MakeMinLength = 2;
+        public const int MakeMaxLength = 15;
+        public const string InvalidMakeError = "Make must be between 2 and 15 characters long!";
+        public const int ModelMinLength = 1;
+        public const int ModelMaxLength = 15;
+        public const string InvalidModelError = "Model must be between 1 and 15 characters long!";
+        public const int CountWheels = 2;
+        public const decimal MinPrice = 0.0m;
+        public const decimal MaxPrice = 1000000.0m;
+        public const string InvalidPriceError = "Price must be between 0.0 and 1000000.0!";
+        public const int CategoryMinLength = 3;
+        public const int CategoryMaxLength = 10;
+        public const string InvalidCategoryError = "Category must be between 3 and 10 characters long!";
+        private string category;
+        public Motorcycle(string make, string model, decimal price, string category)
+            : base(make, model, CountWheels, VehicleType.Motorcycle, price)
+        {
+            Validator.ValidateIntRange(make.Length, MakeMinLength, MakeMaxLength, InvalidMakeError);
+            Validator.ValidateIntRange(model.Length, ModelMinLength, ModelMaxLength, InvalidModelError);
+            Validator.ValidateDecimalRange(price, MinPrice, MaxPrice, InvalidPriceError);
+            Validator.ValidateIntRange(category.Length, CategoryMinLength, CategoryMaxLength, InvalidCategoryError);
+            Category = category;
+        }
+        public string Category
+        {
+            get { return this.category; }
+
+            set { this.category = value; }
+        }
+
+        public override string Print()
+        {
+            return @$" Motorcycle:
+{base.Print()}
+Category: {Category}";
+        }
+
+        //ToDo
+    }
+}
